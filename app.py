@@ -1,9 +1,9 @@
 import streamlit as st
 import random
 
-# ---------------- TITLE ----------------
-st.title("🎮 Snake Water Gun")
-st.caption("Created by Ali Raza Saleem")
+# ---------------- HEADER ----------------
+st.title("🎮 Snake Water Gun Battle Arena")
+st.caption("👨‍💻 Created by Ali Raza Saleem")
 
 st.markdown("---")
 
@@ -13,54 +13,61 @@ if "user_score" not in st.session_state:
     st.session_state.comp_score = 0
     st.session_state.round = 0
 
-# ---------------- DATA ----------------
-choices = {"Snake 🐍": 1, "Water 💧": -1, "Gun 🔫": 0}
-reverse = {1: "Snake 🐍", -1: "Water 💧", 0: "Gun 🔫"}
+# ---------------- GAME DATA ----------------
+choices = {"🐍 Snake": 1, "💧 Water": -1, "🔫 Gun": 0}
+reverse = {1: "🐍 Snake", -1: "💧 Water", 0: "🔫 Gun"}
 
 # ---------------- SCOREBOARD ----------------
-st.sidebar.header("Score")
-st.sidebar.write(f"You: {st.session_state.user_score}")
-st.sidebar.write(f"Computer: {st.session_state.comp_score}")
-st.sidebar.write(f"Round: {st.session_state.round}/5")
+st.sidebar.header("🏆 Scoreboard")
+st.sidebar.write(f"👤 You: {st.session_state.user_score}")
+st.sidebar.write(f"🤖 Computer: {st.session_state.comp_score}")
+st.sidebar.write(f"🔁 Round: {st.session_state.round}/5")
+
+st.sidebar.markdown("---")
+st.sidebar.write("🎯 First to perform in 5 rounds wins!")
 
 # ---------------- GAME ----------------
 if st.session_state.round < 5:
 
-    user_choice = st.radio("Choose your move:", list(choices.keys()))
+    user_choice = st.radio("👇 Choose your move:", list(choices.keys()))
 
-    if st.button("Play"):
+    if st.button("⚔️ Play Round"):
 
         computer = random.choice([-1, 0, 1])
         user = choices[user_choice]
 
         st.session_state.round += 1
 
+        st.write("### 🎮 Round Result")
+
+        st.write(f"👤 You chose: **{user_choice}**")
+        st.write(f"🤖 Computer chose: **{reverse[computer]}**")
+
         if user == computer:
-            result = "Draw"
+            st.info("🤝 It's a Draw!")
         elif (computer == -1 and user == 1) or (computer == 1 and user == 0) or (computer == 0 and user == -1):
             st.session_state.user_score += 1
-            result = "You Win"
+            st.success("🎉 You Win this round!")
         else:
             st.session_state.comp_score += 1
-            result = "You Lose"
+            st.error("💀 Computer wins this round!")
 
-        st.write(f"You: {reverse[user]}")
-        st.write(f"Computer: {reverse[computer]}")
-        st.success(result)
-
-# ---------------- END ----------------
+# ---------------- GAME END ----------------
 if st.session_state.round == 5:
+
     st.markdown("---")
+    st.subheader("🏁 Final Result")
 
     if st.session_state.user_score > st.session_state.comp_score:
-        st.success("🏆 You won the match!")
+        st.success("🏆 You WON the Battle!")
     elif st.session_state.user_score < st.session_state.comp_score:
-        st.error("💀 Computer won the match!")
+        st.error("💀 Computer WON the Battle!")
     else:
-        st.warning("🤝 Match Draw")
+        st.warning("🤝 It's a DRAW match!")
 
 # ---------------- RESET ----------------
-if st.button("Restart"):
+st.markdown("---")
+if st.button("🔄 Restart Game"):
     st.session_state.user_score = 0
     st.session_state.comp_score = 0
     st.session_state.round = 0
@@ -68,4 +75,9 @@ if st.button("Restart"):
 
 # ---------------- FOOTER ----------------
 st.markdown("---")
-st.write("Built with Python & Streamlit")
+st.markdown("""
+<div style="text-align:center; font-size:14px; color:gray;">
+🎮 Built with Python & Streamlit • Practice Project <br>
+⚡ Simple. Fun. Interactive.
+</div>
+""", unsafe_allow_html=True)

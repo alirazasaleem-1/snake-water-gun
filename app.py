@@ -3,7 +3,7 @@ import random
 
 # ---------------- TITLE ----------------
 st.title("🎮 Snake Water Gun Battle Arena")
-st.caption("👨‍💻 Created by Ali Raza Saleem")
+st.caption("Built by Ali Raza Saleem • CS Student | Python & AI Learner")
 
 st.markdown("---")
 
